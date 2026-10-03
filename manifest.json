@@ -1,0 +1,69 @@
+{
+    "manifest_version": "0.3",
+    "name": "bun-blinkit-mcp",
+    "display_name": "Blinkit MCP",
+    "version": "2.0.0",
+    "description": "API-only Blinkit MCP server (TypeScript + Bun). Search, build a cart and prepare checkout on live blinkit.com. No browser, no automated payments.",
+    "long_description": "Better Blinkit MCP lets you shop on Blinkit from your AI assistant without any browser automation.\n\n**How it works**\n- Talks directly to Blinkit's consumer-web JSON API over HTTPS (Cloudflare TLS-fingerprint bypass via impit). No Playwright/Chromium is ever launched.\n- Headless phone + OTP login; the session token is stored locally.\n\n**Key features**\n- Confirm a delivery location before anything else (hard location guard)\n- Search products, autosuggest, recommendations, multi-factor best pick\n- Stateful working cart priced against Blinkit in real time\n- Named custom combos and staples, persisted in a local SQLite database, for repeat orders\n- Saved addresses and checkout preparation\n- Order history stored locally for repeat-purchase suggestions\n\n**Payments are intentionally NOT automated.** The assistant can prepare and validate an order, then hands off to you to pay and confirm in the Blinkit app or website.\n\nUnofficial and not affiliated with Blinkit/Grofers.",
+    "author": {
+        "name": "SinghChinmay",
+        "url": "https://github.com/SinghChinmay"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/SinghChinmay/bun-blinkit-mcp"
+    },
+    "icon": "assets/logo.png",
+    "license": "MIT",
+    "server": {
+        "type": "node",
+        "entry_point": "main.ts",
+        "mcp_config": {
+            "command": "sh",
+            "args": [
+                "${__dirname}/start.sh"
+            ]
+        }
+    },
+    "tools": [
+        { "name": "check_login", "description": "Show login status and the confirmed delivery location" },
+        { "name": "send_otp", "description": "Send a login OTP to a phone number" },
+        { "name": "verify_otp", "description": "Verify the OTP and persist the access token" },
+        { "name": "logout", "description": "Clear the stored access token" },
+        { "name": "get_location", "description": "Show the currently confirmed delivery location" },
+        { "name": "find_location", "description": "Resolve a free-text address and save it as the location" },
+        { "name": "set_location", "description": "Set the delivery location from coordinates" },
+        { "name": "check_serviceability", "description": "Check if Blinkit delivers to a lat/lon" },
+        { "name": "search", "description": "Search products at the confirmed location" },
+        { "name": "autosuggest", "description": "Typeahead search suggestions" },
+        { "name": "home_feed", "description": "Products on the home feed for the location" },
+        { "name": "recommendations", "description": "Products frequently bought with a product id" },
+        { "name": "pick_best", "description": "Search and auto-pick the best product with the multi-factor scorer" },
+        { "name": "add_to_cart", "description": "Add products to the working cart and reprice" },
+        { "name": "remove_from_cart", "description": "Remove a product from the working cart" },
+        { "name": "check_cart", "description": "Show the working cart repriced" },
+        { "name": "clear_cart", "description": "Empty the working cart" },
+        { "name": "save_combo", "description": "Save a named custom combination of products" },
+        { "name": "list_combos", "description": "List saved custom combinations" },
+        { "name": "add_combo_to_cart", "description": "Replay a saved combo into the working cart" },
+        { "name": "delete_combo", "description": "Delete a saved combo" },
+        { "name": "quick_reorder", "description": "Rebuild a basket from saved staples" },
+        { "name": "list_staples", "description": "List the saved reorder catalog" },
+        { "name": "set_staple", "description": "Add or update a staple" },
+        { "name": "delete_staple", "description": "Remove a staple" },
+        { "name": "get_repeat_suggestions", "description": "Products bought in multiple past orders" },
+        { "name": "get_addresses", "description": "List saved delivery addresses (requires login)" },
+        { "name": "select_address", "description": "Choose a saved delivery address for checkout" },
+        { "name": "checkout", "description": "Prepare and validate an order (never pays)" },
+        { "name": "get_order_history", "description": "Fetch and persist recent orders" },
+        { "name": "get_order_count", "description": "Lifetime order counts" }
+    ],
+    "keywords": [
+        "blinkit",
+        "groceries",
+        "automation",
+        "shopping",
+        "api",
+        "bun"
+    ]
+}
